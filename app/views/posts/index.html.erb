@@ -1,0 +1,61 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Posts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Body</th>
+      <th>User</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @posts.each do |post| %>
+      <tr>
+        <td><%= post.title %></td>
+        <td><%= post.body %></td>
+        <td><%= post.user.email %></td>
+        <td><%= link_to 'Show', post %></td>
+        <td><%= link_to 'Edit', edit_post_path(post) %></td>
+        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Post', new_post_path %>
+
+<h2>Versions All</h2>
+<p>All objects except for Post which is separately tracked. Displaying only 10 most recent.</p>
+<table cellpadding=10 border=1>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Event Name</th>
+      <th>whodunnit</th>
+      <th>When</th>
+      <th>Object (after Changes)</th>
+      <th>Object Changes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if PaperTrail::Version.all.any? %>
+      <% PaperTrail::Version.limit(10).reverse.each do |version| %>
+        <tr>
+          <td><%= version.id %></td>
+          <td><%= version.event %></td>
+          <td><%= User.find_by(email: version.whodunnit)&.email %></td>
+          <td><%= version.created_at %></td>
+          <td><pre><%= version.object %></pre></td>
+          <td><pre><%= JSON.pretty_generate(version.changeset) %></pre></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+
+</table>

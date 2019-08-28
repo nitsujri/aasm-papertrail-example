@@ -1,0 +1,92 @@
+
+<h1>Post</h1>
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Current State:</strong>
+  <%=@post.aasm_state%>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @post.title %>
+</p>
+
+<p>
+  <strong>Body:</strong>
+  <%= @post.body %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @post.user_id %>
+</p>
+
+<p>
+  <%= link_to 'Publish/Unpublish', post_publish_unpublish_path(@post) %>
+</p>
+
+<p>
+  <%= link_to 'Edit', edit_post_path(@post) %> |
+  <%= link_to 'Back', posts_path %>
+</p>
+
+
+<h2>Comments</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Body</th>
+      <th>User</th>
+      <th>Post</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @comments.each do |comment| %>
+      <tr>
+        <td><%= comment.body %></td>
+        <td><%= comment.user_id %></td>
+        <td><%= comment.post_id %></td>
+        <td><%= link_to 'Edit', edit_post_comment_path(@post, comment) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<p><%= link_to 'New Comment', new_post_comment_path(@post) %></p>
+
+<h2>Post::Versions</h2>
+<p>This table is displaying Post::Version which is its own versions table. Only last 10.</p>
+<table cellpadding=10 border=1>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Event Name</th>
+      <th>whodunnit</th>
+      <th>When</th>
+      <th>Object (after Changes)</th>
+      <th>Object Changes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @post.versions.any? %>
+      <% @post.versions.last(10).reverse.each do |version| %>
+        <tr>
+          <td><%= version.id %></td>
+          <td><%= version.event %></td>
+          <td><%= User.find(version.whodunnit).email %></td>
+          <td><%= version.created_at %></td>
+          <td><pre><%= version.object %></pre></td>
+          <td><pre><%= JSON.pretty_generate(version.changeset) %></pre></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+
+</table>
