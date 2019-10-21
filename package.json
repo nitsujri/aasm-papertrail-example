@@ -1,5 +1,5 @@
 {
-  "name": "aasm_paperclip_example",
+  "name": "aasm_papertrail_example",
   "private": true,
   "dependencies": {
     "@rails/actioncable": "^6.0.0-alpha",
