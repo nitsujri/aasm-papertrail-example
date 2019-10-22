@@ -1,6 +1,6 @@
-# AASM Paperclip Example
+# AASM Papertrail Example
 
-This repo is an example application that demonstrates the ability to track specific changes for AASM with paperclip.
+This repo is an example application that demonstrates the ability to track specific changes for AASM with Papertrail.
 
 It is a possible solution response to: https://github.com/aasm/aasm/issues/490
 
@@ -9,7 +9,7 @@ It is a possible solution response to: https://github.com/aasm/aasm/issues/490
 - Track model AASM state transitions and all changed data
 - Be able to query for specific transitions
 
-## Why use Paperclip
+## Why use Papertrail
 
 - The version is isolated against all the noise of the rest of versions thus allows it to become a first class citizen/tracking object.
   - Get papertrail version/change querying.
