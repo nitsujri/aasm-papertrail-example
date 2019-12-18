@@ -10,7 +10,7 @@ class Post < ApplicationRecord
   has_many :comments
 
   aasm do
-    state :draft, initlal: true
+    state :draft, initial: true
     state :published
 
     before_all_events :before_all_events
